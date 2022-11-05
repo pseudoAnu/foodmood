@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MyProfile</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{% static 'myprofile.css' %}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet">
+<!-- <link href=
+  "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+          rel="stylesheet"> -->
+</head>
+<body>
+  <nav>
+        
+    <div class='nav__left'>
+      <a href="/feed/"><img src='{% static 'logo1.png' %}' /></a>
+      <div class='nav__search'>
+        <i class="material-icons">search</i>
+        <input type='text' placeholder="Search Foodie's Paradise"/>
+      </div>
+    </div>
+
+    <div class='nav__mid'>
+        <a href='/feed/' class='icon'>
+          <i class='material-icons'>home</i>
+        </a>
+        <a href='#' class='icon'>
+          <i class='material-icons'>messenger</i>
+        </a>
+       <a href='#' class='icon'>
+          <i class='material-icons'>add</i>
+        </a>
+        <a href='#' class='icon'>
+          <i class='material-icons'>notifications</i>
+        </a>
+    </div>
+
+    <div class="nav__right">
+      <div class="dropdown">
+        <a href='#' class="avatar">
+            <img class='avatar__img' src='{{obj.avatar.url}}' />
+            <span><strong>{{obj.first_name}}</strong></span>
+        </a>
+        <div class="dropdown-content">
+          <a href="/myprofile/">View profile</a>
+          <a href="#">Logout</a>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+  </div>
+    <!-- <div class="container"> -->
+        <div class="left-sidebar" id="leftCol">
+          
+          <button id="editbtn" type="button" class="btn btn-success" data-toggle="modal" data-target="#modal2">
+            Edit
+          </button>
+          <!--  -->
+          <br>
+          <img src={{obj.avatar.url}} class="dp">
+          <br>
+          <div class="dpname">{{obj.first_name}} {{obj.last_name}}</div>
+          <div class="bio">
+            {{obj.bio}}
+          </div>
+            
+          <div class="intro">
+            Country: {{obj.country}}
+            <br>
+            <u>Friends</u> ({{obj.get_friends_no}}):
+            <br>
+            <ul style="list-style-type:none;">
+            {% for friend in obj.get_friends %}
+            <li><a href="#"> {{friend}}</a></li>
+            {% endfor %}
+            </ul>
+            <u>Posts:</u>
+               {{obj.get_posts_no}}
+            <!-- <br>
+            <u>likes given: </u>{{obj.get_likes_given_no}}
+            <br> 
+            <u>likes recieved:</u>{{obj.get_likes_recieved_no}} -->
+            
+          </div>
+        </div>
+    <div class="right-sidebar" id="rightCol" style="width: 70%;margin-left: 415px;"><br>
+          <!-- post box -->
+          <form action="{% url 'new_post' %}"method="POST" enctype="multipart/form-data" >
+            {% csrf_token %}
+          <div style="width: 47%;height: 180px; margin-top: 10px;margin-left: 27%; background-color: rgb(253, 250, 250);">
+            <!-- <input rows = "1" cols = "1"maxlength="300" type="text" placeholder="What's on your mind?" style="padding: 10px;margin-left: 18px;margin-top: 18px; border-radius: 21px;width: 87%; background-color: gainsboro;">
+            <label for="files" style="margin-top: 10px;margin-left: 8px;">Select Photo:</label>
+            <input id="files" type="file" name="newphoto_post"style="margin-left: 8px;">
+            <br>
+            <button type="submit" class="btn btn-info btn-sm" id="post_btn" style="margin-left: 41%;">Post</button>  -->
+            {% for p in p_form %}
+            {{p}}
+            <br>
+            {% endfor %}
+            <button type="submit" class="btn btn-info btn-sm"name="submit_p_form" id="post_btn" style="margin-left: 41%;">Post</button>
+            <!-- <button type="submit" class="btn btn-info btn-sm">Post</button> -->
+
+          </div>
+          </form>
+          <!--  -->
+          <p style="text-align: center;font-weight: bold;font-size: medium;"><br>Posts</p>
+          {% for x in qs %}
+            <div style="width: 47%;margin-top: 10px; margin-left: 27%; background-color: rgb(2255, 255, 255);"><br>
+              <img src={{obj.avatar.url}} class='avatar__img' style="margin-left: 7px;">{{obj.first_name}} {{obj.last_name}}
+              <span style="margin-left: 166px;">{{x.created|date:'d M Y'}}</span>
+              <hr>
+              <div style="padding: 5px;">{{x.content}}</div>
+              {% if x.image %}
+              <img src="{{x.image.url}}" style="width: 400px;height: 350px;margin-left: 39px;">
+              {% endif %}
+              <hr>
+            <div class="inner" style="display:inline-block;">
+              <form action="{% url 'like-unlike' %}"method="POST">
+                {% csrf_token %}
+                <input type="hidden"name='post_id'value={{x.id}}>
+                <button type="submit" class="btn btn-info" id="likebtn" style="margin-left:7px;margin-bottom:7px;">
+                  {% if obj not in x.liked.all %} 
+                  <i class="glyphicon glyphicon-heart"></i>&nbsp;like
+                  {% else %}
+                  <i class="glyphicon glyphicon-thumbs-down"></i>&nbsp;Unlike
+                  {% endif %}
+                </button>
+                &nbsp;{{x.num_likes}}    
+              </form>
+            </div>
+              <!-- comment area -->
+              <div class="inner" style="display:inline-block;"><button class="btn btn-info"style="margin-left:90px;margin-bottom:7px;"><i class="glyphicon glyphicon-comment"></i> Comment</button>
+              <span>{{ x.num_comments }}</span></div>
+              <div class="commnet-box">
+                {% if x.comment_set.all %}
+                    {% for c in x.comment_set.all %}
+                            <img class="avatar__img" src={{c.user.avatar.url}} style="margin-left:5px">{{c.user.first_name}} {{c.user.last_name}}
+                            <p style="margin-left:35px;font-weight: bold;">{{c.body}}</p>                   
+                    {% endfor %}
+                {% endif %}
+                </div>
+
+                <form action="{% url 'new_post' %}"method="POST" >
+                  {% csrf_token %}
+                  <input type="hidden" name="post_id" value="{{x.id}}">
+                  {{c_form}}
+                  <button type="submit"class="btn btn-sm" name="submit_c_form">comment</button>
+                 </form>
+                 <br>
+            </div>
+            <br>
+          {% endfor %}
+          
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="text-center" style="font-weight: bold;">Update Profile</h5>
+            <button type="button" class="close" data-dismiss="modal">&times;</button> 
+          </div>
+          <div class="modal-body">
+            <form action="{% url 'update_profile' %}" method="POST" enctype="multipart/form-data">
+                 {% csrf_token %}
+                  <div>
+                    <img src='{{obj.avatar.url}}' style="height:65px;margin-bottom: 12px;margin-left: 104px;"/>
+                    <input type="file" name="mydp">
+                    <!-- <input type="file" id="myFile" name="filename">
+                    <input type="submit"> -->
+                    <br>
+                  </div>
+                  <div class="form-group">
+                      <input type="text" name="first_name" class="form-control" placeholder="{{obj.first_name}}">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" name="last_name" class="form-control" placeholder="{{obj.last_name}}">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" name="bio" class="form-control" placeholder="{{obj.bio}}"autocomplete="off">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" name="country" class="form-control" placeholder="{{obj.country}}">
+                  </div>
+                </div>
+                  <div class="modal-footer justify-content-center">
+                  <button type="submit" class="btn btn-success">Update</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

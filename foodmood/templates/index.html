@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{% static 'signup.css' %}">
+
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h4></h4>
+        </div>
+        <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#exampleModalCenter">
+            Login
+          </button>
+          
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="text-center">Login</h5>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                        <input type="text" name="email" class="form-control" placeholder="Enter E-mail">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" class="form-control" placeholder="Enter Password">
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer justify-content-center">
+                  <button type="button" class="btn btn-success">Login</button>
+                  <div>
+                      <a href="" style="color:rgb(86, 86, 232) ;">Forgotten password?</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+    </header>
+    <!-- signup form -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3"></div>
+
+            <div class="col-lg-6">
+                <div id="ui">
+                    <h1 class="text-center">Sign Up</h1>
+                    <br>
+                    <form class="form-group text-center">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <!-- <label>First Name:</label> -->
+                                <input type="text" name="fname" class="form-control" placeholder="Enter First Name">
+                            </div>
+                            <div class="col-lg-6">
+                                <!-- <label>Last Name:</label> -->
+                                <input type="text" name="lname" class="form-control" placeholder="Enter Last Name">
+                            </div>
+                        </div>
+                        <br>
+                        <!-- <label>E-mail</label> -->
+                        <input type="email" name="email" class="form-control" placeholder="Enter E-mail"> 
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <!-- <label>Password:</label> -->
+                                <input type="password" name="password" class="form-control" placeholder="Enter Password">
+                            </div>
+
+                            <div class="col-lg-6">
+                                <!-- <label>Re-type Password:</label> -->
+                                <input type="password" name="retypepass" class="form-control" placeholder="Retype Password">
+                            </div>
+                        </div>
+                            <br>
+                        <select class=form-control>
+                            <option value="">Choose Gender</option>
+                            <option value="">Male</option>
+                            <option value="">Female</option>
+                            <option value="">Others</option>
+                        </select>
+                        <br>
+                        <input type="submit" name="submit" value="submit" class="btn btn-primary btn-block btn-lg">
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-3"></div>
+
+        </div>
+
+    </div>
+        
+</body>
+</html>

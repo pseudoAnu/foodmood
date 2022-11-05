@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MyProfile</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{% static 'feed1.css' %}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet">
+<!-- <link href=
+  "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+          rel="stylesheet"> -->
+</head>
+<body>
+  <nav>
+        
+    <div class='nav__left'>
+        <a href="/feed/"><img src='{% static 'logo1.png' %}' /></a>
+      <div class='nav__search'>
+        <i class="material-icons">search</i>
+        <input type='text' placeholder="Search Foodie's Paradise"/>
+      </div>
+    </div>
+
+    <div class='nav__mid'>
+        <a href='/feed/' class='icon'>
+          <i class='material-icons'>home</i>
+        </a>
+        <a href='#' class='icon'>
+          <i class='material-icons'>messenger</i>
+        </a>
+       <a href='#' class='icon'>
+          <i class='material-icons'>add</i>
+        </a>
+        <a href='#' class='icon'>
+          <i class='material-icons'>notifications</i>
+        </a>
+    </div>
+
+    <div class="nav__right">
+      <div class="dropdown">
+        <a href='#' class="avatar">
+            <img class='avatar__img' src='{{obj.avatar.url}}' />
+            <span><strong>{{obj.first_name}}</strong></span>
+        </a>
+        <div class="dropdown-content">
+          <a href="/myprofile/">View profile</a>
+          <a href="#">Logout</a>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+  </div>
+    <!-- sidebars -->
+    <div class="container">
+        <div class="left-sidebar" id="lefty" style="position: fixed;width: 400px;background-color: rgb(255, 255, 255);font-size: 21px;overflow-y: scroll; top: 0;bottom: 0;margin-top: 68px; ">
+            <form action="" method="post">
+              {% csrf_token %}
+            <div class='leftdiv__search' style="display: flex;align-items: center;background-color: #f1f2f6;padding: 15px;height: 29px;width: 196px;margin-left: 87px;
+            margin-top: 22px;margin-bottom: 13px;">
+            <!-- <i class="material-icons">search</i> -->
+            <input type='text' name='q'placeholder="Search Grocery"autocomplete="off" style="outline: none;border: none;background: transparent;padding: 0 10px;font-size: small;"/>
+            <button type="submit" class="btn btn-info btn-sm" style="margin-left: -55px;">search</button>
+            </div>
+            </form>
+              <!-- {{loaded_data|safe}} -->
+                    {% for row in out %}
+                      {% for key,value in row.items %}
+                       {% if key == "ImageUrl" %}
+                       <div style="width: 50px;margin-left: 31%;"><img src="{{value}}" height="150px" width="130px"></div>
+                       {% else %}
+                       <div style="font-size: 15px;margin-left: 10px;">{{key}}:{{value}}</div>
+                       {% endif %}
+
+                      {% endfor %}
+                      <br>
+                    {% endfor %}
+        </div>
+        <div class="main-content"></div>
+        <div class="right-sidebar"></div>
+    </div>  
+
+</body>
+</html>
